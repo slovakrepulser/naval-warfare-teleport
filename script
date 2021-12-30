@@ -1,6 +1,10 @@
 local LocalPlayer = game:GetService("Players").LocalPlayer;
 local Character = LocalPlayer.Character;
 
+LocalPlayer.CharacterAdded:Connect(function(character)
+      Character = character
+end)
+
 local IslandPositions = {
 	IslandA = {
 		X = nil, Y = nil, Z = nil,
@@ -12,6 +16,8 @@ local IslandPositions = {
 		X = nil, Y = nil, Z = nil,
 	},
 };
+
+
 
 local function SetIslandPositions()
 	for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
@@ -32,6 +38,7 @@ local function SetIslandPositions()
 end
 SetIslandPositions()
 
+
 LocalPlayer.Chatted:Connect(function(message)
 	local nm = string.lower(message)
 	if nm == ";toa" then
@@ -40,5 +47,7 @@ LocalPlayer.Chatted:Connect(function(message)
 		Character.HumanoidRootPart.CFrame = CFrame.new(IslandPositions.IslandB.X, IslandPositions.IslandB.Y, IslandPositions.IslandB.Z)
 	elseif nm == ";toc" then
 		Character.HumanoidRootPart.CFrame = CFrame.new(IslandPositions.IslandC.X, IslandPositions.IslandC.Y, IslandPositions.IslandC.Z)
+    	elseif nm == ";rpos" then
+        	SetIslandPositions()
 	end
 end)
