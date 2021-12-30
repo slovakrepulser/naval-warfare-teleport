@@ -1,0 +1,44 @@
+local LocalPlayer = game:GetService("Players").LocalPlayer;
+local Character = LocalPlayer.Character;
+
+local IslandPositions = {
+	IslandA = {
+		X = nil, Y = nil, Z = nil,
+	},
+	IslandB = {
+		X = nil, Y = nil, Z = nil,
+	},
+	IslandC = {
+		X = nil, Y = nil, Z = nil,
+	},
+};
+
+local function SetIslandPositions()
+	for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
+		if v.Name == "Island" and v:IsA("Model") then
+			for _, value in pairs(v:GetChildren()) do
+				if value.Name == "IslandCode" and value:IsA("StringValue") then
+					if value.Value == "A" then
+						IslandPositions.IslandA.X = v.Flag.Post.Position.X; IslandPositions.IslandA.Y = v.Flag.Post.Position.Y; IslandPositions.IslandA.Z = v.Flag.Post.Position.Z
+					elseif value.Value == "B" then
+						IslandPositions.IslandB.X = v.Flag.Post.Position.X; IslandPositions.IslandB.Y = v.Flag.Post.Position.Y; IslandPositions.IslandB.Z = v.Flag.Post.Position.Z
+					elseif value.Value == "C" then
+						IslandPositions.IslandC.X = v.Flag.Post.Position.X; IslandPositions.IslandC.Y = v.Flag.Post.Position.Y; IslandPositions.IslandC.Z = v.Flag.Post.Position.Z;
+					end
+				end
+			end
+		end
+	end
+end
+SetIslandPositions()
+
+LocalPlayer.Chatted:Connect(function(message)
+	local nm = string.lower(message)
+	if nm == ";toa" then
+		Character.HumanoidRootPart.CFrame = CFrame.new(IslandPositions.IslandA.X, IslandPositions.IslandA.Y, IslandPositions.IslandA.Z)
+	elseif nm == ";tob" then
+		Character.HumanoidRootPart.CFrame = CFrame.new(IslandPositions.IslandB.X, IslandPositions.IslandB.Y, IslandPositions.IslandB.Z)
+	elseif nm == ";toc" then
+		Character.HumanoidRootPart.CFrame = CFrame.new(IslandPositions.IslandC.X, IslandPositions.IslandC.Y, IslandPositions.IslandC.Z)
+	end
+end)
